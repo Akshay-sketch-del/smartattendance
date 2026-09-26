@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Mark Attendance</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        .navbar {
+            background-color: #2563eb;
+            color: white;
+            padding: 18px 30px;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .details {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        input,
+        select {
+            padding: 8px;
+            margin-left: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f5f9;
+        }
+
+        .save-button {
+            margin-top: 25px;
+            padding: 12px 25px;
+
+            background-color: #2563eb;
+            color: white;
+
+            border: none;
+            border-radius: 5px;
+
+            cursor: pointer;
+
+            font-size: 16px;
+        }
+
+        .save-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+
+            text-decoration: none;
+            color: #2563eb;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="navbar">
+
+        <h2>
+            Smart Attendance
+        </h2>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="card">
+
+            <h2>
+                Mark Attendance
+            </h2>
+
+
+            <p>
+                Subject:
+                <strong>
+                    {{ subject.code }} -
+                    {{ subject.name }}
+                </strong>
+            </p>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <div class="details">
+
+                    <div>
+
+                        <label>
+                            Date:
+                        </label>
+
+                        <input
+                            type="date"
+                            name="date"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Period:
+                        </label>
+
+                        <input
+                            type="number"
+                            name="period"
+                            min="1"
+                            max="10"
+                            value="1"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <table>
+
+                    <tr>
+
+                        <th>
+                            USN
+                        </th>
+
+                        <th>
+                            Student
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+
+                    {% for student in students %}
+
+                    <tr>
+
+                        <td>
+                            {{ student.usn }}
+                        </td>
+
+
+                        <td>
+                            {{ student.user.username }}
+                        </td>
+
+
+                        <td>
+
+                            <select
+                                name="status_{{ student.id }}"
+                            >
+
+                                <option value="Present">
+                                    Present
+                                </option>
+
+                                <option value="Absent">
+                                    Absent
+                                </option>
+
+                            </select>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="3">
+                            No students found.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+
+
+                <button
+                    type="submit"
+                    class="save-button"
+                >
+                    Save Attendance
+                </button>
+
+
+            </form>
+
+
+            <a
+                href="/faculty-dashboard/"
+                class="back"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

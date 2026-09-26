@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Student Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        .navbar {
+            background-color: #2563eb;
+            color: white;
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+            background-color: #dc2626;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .welcome {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .card p {
+            color: #666;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 10px;
+
+            padding: 10px 15px;
+
+            background-color: #2563eb;
+            color: white;
+
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <h2>Smart Attendance</h2>
+
+        <a href="/logout/" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="welcome">
+
+            <h2>
+                Welcome, {{ student.user.get_full_name|default:student.user.username }}
+            </h2>
+
+            <p>
+                USN: {{ student.usn }}
+            </p>
+
+            <p>
+                Department: {{ student.department.name }}
+            </p>
+
+            <p>
+                Semester: {{ student.semester }}
+                | Section: {{ student.section }}
+            </p>
+
+        </div>
+
+
+        <div class="cards">
+
+            <div class="card">
+
+                <h3>My Attendance</h3>
+
+                <p>
+                    View your overall attendance.
+                </p>
+
+                <a href="/my-attendance/" class="button">
+                    View Attendance
+                </a>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Subject-wise Attendance</h3>
+
+                <p>
+                    Check attendance for each subject.
+                </p>
+
+                <a href="/subject-attendance/" class="button">
+                    Subject-wise Attendance
+                </a>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Low Attendance</h3>
+
+                <p>
+                    Check subjects where attendance is low.
+                </p>
+
+                <a href="/low-attendance/" class="button">
+                    Low Attendance
+                </a>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Request Correction</h3>
+
+                <p>
+                    Request correction for an attendance record.
+                </p>
+
+                <a href="/request-correction/" class="button">
+                    Request Attendance Correction
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Attendance - Login</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f4f7;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            height: 100vh;
+        }
+
+        .login-box {
+            width: 350px;
+            background: white;
+            padding: 30px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+
+            box-sizing: border-box;
+
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+
+            margin-top: 25px;
+
+            border: none;
+            border-radius: 5px;
+
+            background-color: #2563eb;
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <h1>Smart Attendance</h1>
+
+        <p class="subtitle">
+            Login to your account
+        </p>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <label>Username</label>
+
+            <input
+                type="text"
+                name="username"
+                placeholder="Enter username"
+                required
+            >
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Enter password"
+                required
+            >
+
+            <button type="submit">
+                Login
+            </button>
+
+        </form>
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <p class="error">
+                    {{ message }}
+                </p>
+
+            {% endfor %}
+
+        {% endif %}
+
+    </div>
+
+</body>
+</html>

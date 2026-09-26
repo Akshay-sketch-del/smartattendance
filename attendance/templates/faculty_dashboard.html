@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Faculty Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        .navbar {
+            background-color: #2563eb;
+            color: white;
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+            background-color: #dc2626;
+
+            padding: 8px 15px;
+
+            border-radius: 5px;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .welcome {
+            background-color: white;
+            padding: 20px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+        }
+
+        .subjects {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .card p {
+            color: #666;
+        }
+
+        .button {
+            display: inline-block;
+
+            margin-top: 10px;
+
+            padding: 10px 15px;
+
+            background-color: #2563eb;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .correction-section {
+            margin-top: 30px;
+
+            background-color: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- Navbar -->
+
+    <div class="navbar">
+
+        <h2>
+            Smart Attendance
+        </h2>
+
+        <a href="/logout/" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+
+    <!-- Main Container -->
+
+    <div class="container">
+
+
+        <!-- Welcome Section -->
+
+        <div class="welcome">
+
+            <h2>
+                Welcome, {{ faculty.user.username }}
+            </h2>
+
+            <p>
+                Employee ID:
+                {{ faculty.employee_id }}
+            </p>
+
+            <p>
+                Department:
+                {{ faculty.department.name }}
+            </p>
+
+        </div>
+
+
+        <!-- Assigned Subjects -->
+
+        <h2>
+            My Assigned Subjects
+        </h2>
+
+
+        <div class="subjects">
+
+
+            {% for subject in subjects %}
+
+
+            <div class="card">
+
+                <h3>
+                    {{ subject.code }}
+                </h3>
+
+                <p>
+                    {{ subject.name }}
+                </p>
+
+                <p>
+                    Semester:
+                    {{ subject.semester }}
+                </p>
+
+
+                <a href="{% url 'mark_attendance' subject.id %}" class="button">
+                    Mark Attendance
+                </a>
+
+            </div>
+
+
+            {% empty %}
+
+
+            <div class="card">
+
+                <h3>
+                    No Subjects
+                </h3>
+
+                <p>
+                    No subjects are currently
+                    assigned to you.
+                </p>
+
+            </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+        <!-- Correction Requests -->
+
+        <div class="correction-section">
+
+            <h2>
+                Attendance Corrections
+            </h2>
+
+            <p>
+                Review attendance correction
+                requests submitted by students.
+            </p>
+
+            <a href="/correction-requests/" class="button">
+                Correction Requests
+            </a>
+
+        </div>
+        <div class="correction-section">
+
+            <h2>
+                Attendance History
+            </h2>
+
+            <p>
+                View previously recorded attendance
+                sessions.
+            </p>
+
+            <a href="/attendance-history/" class="button">
+                Attendance History
+            </a>
+
+        </div>
+        <div class="correction-section">
+
+            <h2>
+                Low Attendance
+            </h2>
+
+            <p>
+                View students whose attendance is
+                below 75%.
+            </p>
+
+            <a href="/faculty-low-attendance/" class="button">
+                Low Attendance
+            </a>
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

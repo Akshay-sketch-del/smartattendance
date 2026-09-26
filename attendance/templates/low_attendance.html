@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Low Attendance</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        .navbar {
+            background-color: #2563eb;
+            color: white;
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f5f9;
+        }
+
+        .warning {
+            color: red;
+            font-weight: bold;
+        }
+
+        .message {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #2563eb;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <h2>
+            Smart Attendance
+        </h2>
+
+        <a
+            href="/logout/"
+            style="color:white;"
+        >
+            Logout
+        </a>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="card">
+
+            <h2>
+                Low Attendance
+            </h2>
+
+            <p>
+                USN: {{ student.usn }}
+            </p>
+
+
+            {% if subjects %}
+
+                <div class="message">
+
+                    ⚠️ The following subjects have attendance
+                    below 75%.
+
+                </div>
+
+
+                <table>
+
+                    <tr>
+
+                        <th>
+                            Subject Code
+                        </th>
+
+                        <th>
+                            Subject Name
+                        </th>
+
+                        <th>
+                            Present
+                        </th>
+
+                        <th>
+                            Total Classes
+                        </th>
+
+                        <th>
+                            Attendance %
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+
+                    {% for subject in subjects %}
+
+                    <tr>
+
+                        <td>
+                            {{ subject.code }}
+                        </td>
+
+                        <td>
+                            {{ subject.name }}
+                        </td>
+
+                        <td>
+                            {{ subject.present }}
+                        </td>
+
+                        <td>
+                            {{ subject.total }}
+                        </td>
+
+                        <td class="warning">
+
+                            {{ subject.percentage }}%
+
+                        </td>
+
+                        <td class="warning">
+
+                            Low Attendance
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+
+
+            {% else %}
+
+                <div class="message">
+
+                    ✅ No subjects have attendance below 75%.
+
+                </div>
+
+            {% endif %}
+
+
+            <a
+                href="/student-dashboard/"
+                class="back"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

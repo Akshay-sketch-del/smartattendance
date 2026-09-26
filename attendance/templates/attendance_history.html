@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Attendance History</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        .navbar {
+            background-color: #2563eb;
+            color: white;
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+            background-color: #dc2626;
+
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f5f9;
+        }
+
+        .back {
+            display: inline-block;
+
+            margin-top: 20px;
+
+            text-decoration: none;
+
+            color: #2563eb;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- Navbar -->
+
+    <div class="navbar">
+
+        <h2>
+            Smart Attendance
+        </h2>
+
+        <a
+            href="/logout/"
+            class="logout"
+        >
+            Logout
+        </a>
+
+    </div>
+
+
+    <!-- Main Container -->
+
+    <div class="container">
+
+
+        <div class="card">
+
+            <h2>
+                Attendance History
+            </h2>
+
+            <p>
+                Faculty:
+                {{ faculty.employee_id }}
+            </p>
+
+
+            <table>
+
+                <tr>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Subject Code
+                    </th>
+
+                    <th>
+                        Subject Name
+                    </th>
+
+                    <th>
+                        Semester
+                    </th>
+
+                    <th>
+                        Period
+                    </th>
+
+                </tr>
+
+
+                {% for session in sessions %}
+
+
+                <tr>
+
+                    <td>
+                        {{ session.date }}
+                    </td>
+
+                    <td>
+                        {{ session.subject.code }}
+                    </td>
+
+                    <td>
+                        {{ session.subject.name }}
+                    </td>
+
+                    <td>
+                        {{ session.subject.semester }}
+                    </td>
+
+                    <td>
+                        {{ session.period }}
+                    </td>
+
+                </tr>
+
+
+                {% empty %}
+
+
+                <tr>
+
+                    <td colspan="5">
+                        No attendance history found.
+                    </td>
+
+                </tr>
+
+
+                {% endfor %}
+
+
+            </table>
+
+
+            <a
+                href="/faculty-dashboard/"
+                class="back"
+            >
+                ← Back to Faculty Dashboard
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

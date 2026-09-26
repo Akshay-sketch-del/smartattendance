@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Request Attendance Correction</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        .navbar {
+            background-color: #2563eb;
+            color: white;
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f5f9;
+        }
+
+        select,
+        textarea {
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 60px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 9px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #2563eb;
+        }
+
+        .message {
+            padding: 12px;
+            margin-bottom: 15px;
+            background-color: #d1fae5;
+            color: #065f46;
+            border-radius: 5px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <h2>
+            Smart Attendance
+        </h2>
+
+        <a
+            href="/logout/"
+            style="color:white;"
+        >
+            Logout
+        </a>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="card">
+
+            <h2>
+                Request Attendance Correction
+            </h2>
+
+            <p>
+                USN: {{ student.usn }}
+            </p>
+
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="message">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+
+            <table>
+
+                <tr>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Subject
+                    </th>
+
+                    <th>
+                        Period
+                    </th>
+
+                    <th>
+                        Current Status
+                    </th>
+
+                    <th>
+                        Request Status
+                    </th>
+
+                    <th>
+                        Reason
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+
+                {% for attendance in attendances %}
+
+                <tr>
+
+                    <td>
+                        {{ attendance.session.date }}
+                    </td>
+
+                    <td>
+                        {{ attendance.session.subject.code }}
+                        -
+                        {{ attendance.session.subject.name }}
+                    </td>
+
+                    <td>
+                        {{ attendance.session.period }}
+                    </td>
+
+                    <td>
+                        {{ attendance.status }}
+                    </td>
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <td>
+
+                            <select name="requested_status" required>
+
+                                <option value="">
+                                    Select
+                                </option>
+
+                                <option value="Present">
+                                    Present
+                                </option>
+
+                                <option value="Absent">
+                                    Absent
+                                </option>
+
+                            </select>
+
+                        </td>
+
+                        <td>
+
+                            <textarea
+                                name="reason"
+                                placeholder="Enter reason"
+                                required
+                            ></textarea>
+
+                        </td>
+
+                        <td>
+
+                            <input
+                                type="hidden"
+                                name="attendance_id"
+                                value="{{ attendance.id }}"
+                            >
+
+                            <button type="submit">
+                                Request
+                            </button>
+
+                        </td>
+
+                    </form>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="7">
+                        No attendance records found.
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+
+            <a
+                href="/student-dashboard/"
+                class="back"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

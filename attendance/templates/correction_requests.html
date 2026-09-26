@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Correction Requests</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        .navbar {
+            background-color: #2563eb;
+            color: white;
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f5f9;
+        }
+
+        .approve {
+            background-color: #16a34a;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .reject {
+            background-color: #dc2626;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #2563eb;
+        }
+
+        .empty {
+            padding: 20px;
+            text-align: center;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <h2>
+            Smart Attendance
+        </h2>
+
+        <a
+            href="/logout/"
+            style="color:white;"
+        >
+            Logout
+        </a>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="card">
+
+            <h2>
+                Attendance Correction Requests
+            </h2>
+
+            <p>
+                Faculty: {{ faculty.employee_id }}
+            </p>
+
+
+            {% if correction_requests %}
+
+            <table>
+
+                <tr>
+
+                    <th>
+                        Student
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Subject
+                    </th>
+
+                    <th>
+                        Current Status
+                    </th>
+
+                    <th>
+                        Requested Status
+                    </th>
+
+                    <th>
+                        Reason
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+
+                {% for request in correction_requests %}
+
+                <tr>
+
+                    <td>
+                        {{ request.student.usn }}
+                    </td>
+
+                    <td>
+                        {{ request.attendance.session.date }}
+                    </td>
+
+                    <td>
+                        {{ request.attendance.session.subject.code }}
+                        -
+                        {{ request.attendance.session.subject.name }}
+                    </td>
+
+                    <td>
+                        {{ request.attendance.status }}
+                    </td>
+
+                    <td>
+                        {{ request.requested_status }}
+                    </td>
+
+                    <td>
+                        {{ request.reason }}
+                    </td>
+
+                    <td>
+
+                        <form
+                            method="POST"
+                            action="/review-correction/{{ request.id }}/approve/"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="approve"
+                            >
+                                Approve
+                            </button>
+
+                        </form>
+
+
+                        <br>
+
+
+                        <form
+                            method="POST"
+                            action="/review-correction/{{ request.id }}/reject/"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="reject"
+                            >
+                                Reject
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+            {% else %}
+
+            <div class="empty">
+
+                No pending correction requests.
+
+            </div>
+
+            {% endif %}
+
+
+            <a
+                href="/faculty-dashboard/"
+                class="back"
+            >
+                ← Back to Faculty Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
